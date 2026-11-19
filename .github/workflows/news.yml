@@ -1,0 +1,28 @@
+name: Update Telegram news
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/10 * * * *'
+permissions:
+  contents: write
+concurrency:
+  group: telegram-news
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch and compress news
+        run: python3 github_feed_publish.py
+      - name: Publish changed feed
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add feed/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update public Telegram news'
+            git push
+          fi
+
