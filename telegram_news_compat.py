@@ -16,7 +16,7 @@ from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 
-CHANNEL = "beemineru"
+CHANNEL = "BeeCraftWorld"
 FEED_URL = f"https://t.me/s/{CHANNEL}"
 POST_LIMIT = 3
 VOID_ELEMENTS = set("area base br col embed hr img input link meta param source track wbr".split())
